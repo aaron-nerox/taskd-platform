@@ -1,0 +1,42 @@
+version : '3.8'
+#will be running three services with data persistence
+services:
+# first service to run needs to be our database
+  db:
+    image: mongo
+    container_name: mongo-db
+    #   in order to always maximize the availability of the DB
+    restart: always
+    hostname: 'mongodb://localhost'
+    ports:
+      - '1027:27017'
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://localhost:27017/
+    volumes:
+      - ~/mongo/data:/data/db
+# second service to run the nest backend and port forward it to port 8000
+  nest:
+    build:
+#     This will be the path for the build
+      context: ./taskd_nest
+      dockerfile: Dockerfile
+#   This is to give the container a specific name
+    container_name: taskd_nest_container
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./nest:/app
+# last service to run the next app and port forward it to port 3000
+  next:
+    build:
+#     This will be the path for the build
+      context: ./taskd_next
+      dockerfile: Dockerfile
+#   This is to give the container a specific name
+    container_name: taskd_next_container
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./next:/app
+#   This is to make the next app available to work on outside the container
+    stdin_open: true
