@@ -5,6 +5,7 @@ import {Model} from "mongoose";
 import {TaskDto} from "../dto/task.dto";
 import {TaskSummaryDto} from "../dto/taskSummary.dto";
 import {TaskStatus} from "../enums/TaskStatus";
+import {v4 as uuid4} from "uuid";
 
 
 @Injectable()
@@ -12,6 +13,7 @@ export class TasksService {
     constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
     async createTask(task: TaskDto) : Promise<Task> {
+        task.setId(uuid4())
         const createdTask = new this.taskModel(task)
         return createdTask.save()
     }
@@ -21,15 +23,15 @@ export class TasksService {
     }
 
     async getTaskById(id: string) : Promise<Task> {
-        return this.taskModel.findById(id)
+        return this.taskModel.findOne({taskId: id})
     }
 
     async updateTask(id: string, newTask: TaskDto): Promise<Task> {
-        return this.taskModel.findByIdAndUpdate(id, newTask)
+        return this.taskModel.findOneAndUpdate({taskId: id}, newTask)
     }
 
     async deleteTask(id: string) : Promise<Task> {
-        return this.taskModel.findByIdAndDelete(id)
+        return this.taskModel.findOneAndDelete({taskId: id})
     }
 
     async getTasksSummary() : Promise<TaskSummaryDto> {

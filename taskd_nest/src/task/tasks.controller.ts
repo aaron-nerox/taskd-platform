@@ -7,11 +7,12 @@ import {Response} from "express";
 @Controller('tasks')
 export class TasksController {
 
-    constructor(private taskService: TasksService) {}
+    constructor(private taskService: TasksService) {
+    }
 
     @Post()
     async createTask(@Body() taskDto: TaskDto, @Res() response: Response) {
-        if(!taskDto) {
+        if (!taskDto) {
             return response.status(400).send({
                 error: true,
                 message: "Please specify a task to add"
@@ -20,7 +21,7 @@ export class TasksController {
 
         const result = await this.taskService.createTask(taskDto)
 
-        if(!result) {
+        if (!result) {
             return response.status(500).send({
                 error: true,
                 message: "Error creating task, please try again."
@@ -34,7 +35,7 @@ export class TasksController {
     async findAllTasks(@Res() response: Response) {
         const result = await this.taskService.getAllTasks();
 
-        if(!result) {
+        if (!result) {
             response.status(404).send({
                 error: true,
                 message: "Error finding any task"
@@ -46,7 +47,7 @@ export class TasksController {
 
     @Get('summary')
     async getTaskSummary(@Res() response: Response) {
-        const result =  await this.taskService.getTasksSummary()
+        const result = await this.taskService.getTasksSummary()
         return response.status(200).send(result)
     }
 
@@ -54,7 +55,7 @@ export class TasksController {
     async findTaskById(@Param() params: any, @Res() response: Response) {
         const result = await this.taskService.getTaskById(params.id)
 
-        if(!result) {
+        if (!result) {
             return response.status(404).send({
                 error: true,
                 message: `Error finding task with specified id ${params.id}`
@@ -70,7 +71,7 @@ export class TasksController {
         @Body() taskDto: TaskDto,
         @Res() response: Response
     ) {
-        if(!taskDto) {
+        if (!taskDto) {
             return response.status(400).send({
                 error: true,
                 message: "Please specify a task to add"
@@ -79,7 +80,7 @@ export class TasksController {
 
         const result = await this.taskService.updateTask(params.id, taskDto)
 
-        if(!result) {
+        if (!result) {
             return response.status(500).send({
                 error: true,
                 message: "Error updating task, please try again."
@@ -93,7 +94,7 @@ export class TasksController {
     async deleteTask(@Param() params: any, @Res() response: Response) {
         const result = await this.taskService.deleteTask(params.id)
 
-        if(!result) {
+        if (!result) {
             return response.status(404).send({
                 error: true,
                 message: "Error deleting task, please try again."

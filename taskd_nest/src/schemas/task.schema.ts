@@ -9,6 +9,13 @@ export class Task {
 
     @Prop({
         required: true,
+        type: String,
+        unique: true
+    })
+    taskId: string
+
+    @Prop({
+        required: true,
         type: String
     })
     title: string;
