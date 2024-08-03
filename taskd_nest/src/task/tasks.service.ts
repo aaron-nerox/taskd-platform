@@ -27,7 +27,16 @@ export class TasksService {
     }
 
     async updateTask(id: string, newTask: TaskDto): Promise<Task> {
-        return this.taskModel.findOneAndUpdate({taskId: id}, newTask)
+        return this.taskModel
+            .findOneAndUpdate(
+                {
+                    taskId: id
+                },
+                newTask,
+                {
+                    new: true
+                }
+            )
     }
 
     async deleteTask(id: string) : Promise<Task> {
@@ -39,7 +48,11 @@ export class TasksService {
         const completedTasks = tasks.filter(task => task.status === TaskStatus.Completed).length
         const pendingTasks = tasks.filter(task => task.status == TaskStatus.Pending).length
         const inProgressTasks = tasks.filter(task => task.status == TaskStatus.InProgress).length
-        const productivityRatio = ((completedTasks + inProgressTasks)/(pendingTasks*2))*100
+        let productivityRatio : number;
+
+        if(pendingTasks > 0) {
+            productivityRatio = ((completedTasks + inProgressTasks)/(pendingTasks*2))*100
+        }
 
         return new TaskSummaryDto(
             tasks.length,

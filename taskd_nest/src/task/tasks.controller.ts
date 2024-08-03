@@ -2,67 +2,118 @@ import {Body, Controller, Delete, Get, Param, Post, Put, Res} from "@nestjs/comm
 import {TasksService} from "./tasks.service";
 import {TaskDto} from "../dto/task.dto";
 import {Response} from "express";
+import {Task} from "../schemas/task.schema";
+import {TaskSummaryDto} from "../dto/taskSummary.dto";
 
 
 @Controller('tasks')
 export class TasksController {
 
-    constructor(private taskService: TasksService) {
-    }
+    constructor(private taskService: TasksService) {}
 
     @Post()
     async createTask(@Body() taskDto: TaskDto, @Res() response: Response) {
-        if (!taskDto) {
-            return response.status(400).send({
-                error: true,
-                message: "Please specify a task to add"
-            })
+        let result : Task;
+
+        try {
+            result = await this.taskService.createTask(taskDto)
+        } catch (error) {
+            return response
+                .status(500)
+                .send({
+                    error: true,
+                    statusCode: 500,
+                    message: "Error creating task, please try again."
+                })
         }
 
-        const result = await this.taskService.createTask(taskDto)
-
-        if (!result) {
-            return response.status(500).send({
-                error: true,
-                message: "Error creating task, please try again."
-            })
-        }
-
-        return response.status(201).send(result)
+        return response
+            .status(201)
+            .send(result)
     }
 
     @Get()
     async findAllTasks(@Res() response: Response) {
-        const result = await this.taskService.getAllTasks();
+        let tasks: Task[];
 
-        if (!result) {
-            response.status(404).send({
+        try {
+            tasks = await this.taskService.getAllTasks();
+        } catch (error) {
+            return response.status(500).send({
                 error: true,
-                message: "Error finding any task"
+                statusCode: 500,
+                message: "Error getting tasks"
             })
         }
 
-        return response.status(200).send(result)
+        if (!tasks) {
+            response
+                .status(404)
+                .send({
+                    error: true,
+                    statusCode: 404,
+                    message: "Error finding any task"
+                })
+        }
+
+        return response
+            .status(200)
+            .send(tasks)
+
     }
 
     @Get('summary')
     async getTaskSummary(@Res() response: Response) {
-        const result = await this.taskService.getTasksSummary()
-        return response.status(200).send(result)
+        let taskSummary: TaskSummaryDto;
+
+        try {
+            taskSummary = await this.taskService.getTasksSummary()
+        } catch (error) {
+            return response
+                .status(500)
+                .send({
+                    error: true,
+                    statusCode: 500,
+                    message: "Error getting tasks summary"
+                })
+        }
+
+        return response
+            .status(200)
+            .send(taskSummary)
+
     }
 
     @Get(':id')
     async findTaskById(@Param() params: any, @Res() response: Response) {
-        const result = await this.taskService.getTaskById(params.id)
+        let task: Task;
 
-        if (!result) {
-            return response.status(404).send({
-                error: true,
-                message: `Error finding task with specified id ${params.id}`
-            })
+        try {
+            task = await this.taskService.getTaskById(params.id)
+        } catch (error) {
+            return response
+                .status(500)
+                .send({
+                    error: true,
+                    statusCode: 500,
+                    message: "Error getting the task"
+                })
         }
 
-        return response.status(200).send(result)
+        if (!task) {
+            return response
+                .status(404)
+                .send({
+                    error: true,
+                    statusCode: 404,
+                    message: `Error finding task with specified id ${params.id}`
+                })
+        }
+
+        return response
+            .status(200)
+            .send(task)
+
     }
 
     @Put(':id')
@@ -71,37 +122,65 @@ export class TasksController {
         @Body() taskDto: TaskDto,
         @Res() response: Response
     ) {
-        if (!taskDto) {
-            return response.status(400).send({
-                error: true,
-                message: "Please specify a task to add"
-            })
+        let resultTask: Task;
+
+        try {
+            resultTask = await this.taskService.updateTask(params.id, taskDto)
+        } catch (error) {
+            return response
+                .status(500)
+                .send({
+                    error: true,
+                    statusCode: 500,
+                    message: "Error updating this task"
+                })
         }
 
-        const result = await this.taskService.updateTask(params.id, taskDto)
-
-        if (!result) {
-            return response.status(500).send({
-                error: true,
-                message: "Error updating task, please try again."
-            })
+        if(!resultTask) {
+            return response
+                .status(404)
+                .send({
+                    error: true,
+                    statusCode: 404,
+                    message: `Error finding task with specified id ${params.id}`
+                })
         }
 
-        return response.status(200).send(result)
+        return response
+            .status(200)
+            .send(resultTask)
+
     }
 
     @Delete(':id')
     async deleteTask(@Param() params: any, @Res() response: Response) {
-        const result = await this.taskService.deleteTask(params.id)
+        let resultTask: Task;
 
-        if (!result) {
-            return response.status(404).send({
-                error: true,
-                message: "Error deleting task, please try again."
-            })
+        try {
+            resultTask = await this.taskService.deleteTask(params.id);
+        } catch(error) {
+            return response
+                .status(404)
+                .send({
+                    error: true,
+                    statusCode: 404,
+                    message: "Error deleting task, please try again."
+                })
         }
 
-        return response.status(200).send(result)
+        if(!resultTask) {
+            return response
+                .status(404)
+                .send({
+                    error: true,
+                    statusCode: 404,
+                    message: `Error finding task with specified id ${params.id}`
+                })
+        }
+
+        return response
+            .status(200)
+            .send(resultTask)
     }
 
 }
