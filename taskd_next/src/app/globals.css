@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 body {
-
+    background-image: linear-gradient(120deg, #9500FF, #FF4200);
+    background-repeat: no-repeat;
 }
 
-@layer utilities {
-
-}
+@layer utilities {}
