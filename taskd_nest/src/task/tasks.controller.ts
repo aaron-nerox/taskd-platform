@@ -1,9 +1,10 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Res} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards} from "@nestjs/common";
 import {TasksService} from "./tasks.service";
 import {TaskDto} from "../dto/task.dto";
 import {Response} from "express";
 import {Task} from "../schemas/task.schema";
 import {TaskSummaryDto} from "../dto/taskSummary.dto";
+import {AuthGuard} from "../auth/auth.guard";
 
 
 @Controller('tasks')
@@ -12,6 +13,7 @@ export class TasksController {
     constructor(private taskService: TasksService) {}
 
     @Post()
+    @UseGuards(AuthGuard)
     async createTask(@Body() taskDto: TaskDto, @Res() response: Response) {
         let result : Task;
 
@@ -33,6 +35,7 @@ export class TasksController {
     }
 
     @Get()
+    @UseGuards(AuthGuard)
     async findAllTasks(@Res() response: Response) {
         let tasks: Task[];
 
@@ -63,6 +66,7 @@ export class TasksController {
     }
 
     @Get('summary')
+    @UseGuards(AuthGuard)
     async getTaskSummary(@Res() response: Response) {
         let taskSummary: TaskSummaryDto;
 
@@ -85,6 +89,7 @@ export class TasksController {
     }
 
     @Get(':id')
+    @UseGuards(AuthGuard)
     async findTaskById(@Param() params: any, @Res() response: Response) {
         let task: Task;
 
@@ -117,6 +122,7 @@ export class TasksController {
     }
 
     @Put(':id')
+    @UseGuards(AuthGuard)
     async updateTask(
         @Param() params: any,
         @Body() taskDto: TaskDto,
@@ -153,6 +159,7 @@ export class TasksController {
     }
 
     @Delete(':id')
+    @UseGuards(AuthGuard)
     async deleteTask(@Param() params: any, @Res() response: Response) {
         let resultTask: Task;
 
