@@ -8,7 +8,7 @@ export default function TextIconButton(
     }
 ) {
     return <div
-        className="bg-off-white text-dark rounded-full inline-flex flex-row items-center justify-center px-4 py-2 gap-x-3"
+        className={"bg-off-white text-dark rounded-full inline-flex flex-row items-center justify-center px-4 py-2 gap-x-3"}
         onClick={props.onButtonClick}
     >
         {props.icon &&
@@ -24,5 +24,6 @@ export default function TextIconButton(
         <p className="text-lg font-bold cursor-pointer select-none">
             {props.text}
         </p>
+
     </div>
 }
