@@ -5,20 +5,24 @@ import IconInput from "@/components/IconInput";
 import {useState} from "react";
 import TextIconButton from "@/components/Button";
 import login from "@/utils/api/login.api";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ConnectPage() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [popOverOpen, setPopOverOpen] = useState<boolean>(false)
+    const { toast } = useToast()
 
     const handleLogin = () => {
-        setPopOverOpen(false);
         login(email, password)
             .then((result) => {
                 console.log(result);
             })
             .catch((error) => {
-                setPopOverOpen(true);
+                toast({
+                    // variant: "destructive",
+                    title: "Error connecting",
+                    description: "Invalid credentials, please try again."
+                })
             })
     }
 
