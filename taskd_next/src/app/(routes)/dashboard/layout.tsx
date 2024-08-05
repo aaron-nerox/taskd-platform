@@ -4,7 +4,7 @@ import React from "react";
 import TextIconButton from "@/components/base/Button";
 import {usePathname, useRouter} from "next/navigation";
 
-export default function ConnectLayout(
+export default function SummaryLayout(
     {children} : Readonly<{children: React.ReactNode}>
 ) {
     const router = useRouter();
