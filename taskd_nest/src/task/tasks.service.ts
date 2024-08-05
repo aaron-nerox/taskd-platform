@@ -52,6 +52,8 @@ export class TasksService {
 
         if(pendingTasks > 0) {
             productivityRatio = parseFloat((((completedTasks + inProgressTasks)/(pendingTasks*2))*100).toFixed(2));
+        } else {
+            productivityRatio = 200
         }
 
         return new TaskSummaryDto(
