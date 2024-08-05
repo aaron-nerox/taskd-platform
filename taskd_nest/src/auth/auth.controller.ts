@@ -71,4 +71,12 @@ export class AuthController {
         return result;
 
     }
+
+    @Post('logout')
+    logout(@Res() response: Response) {
+        response
+            .status(200)
+            .clearCookie('user_token')
+            .send({});
+    }
 }
