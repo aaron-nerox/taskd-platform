@@ -71,7 +71,7 @@ export default function ConnectPage() {
                 text={'Connect'}
                 icon={'/assets/icons/login.svg'}
                 onButtonClick={handleLogin}
-                className="w-1/5 my-5"
+                className="w-1/5 my-5 bg-off-white"
             />
         </div>
     </div>

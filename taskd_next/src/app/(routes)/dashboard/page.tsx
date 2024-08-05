@@ -1,5 +1,16 @@
-export default function ConnectPage() {
+import {getTasks} from "@/api/tasks.api";
+
+export default async function ConnectPage() {
+
+    let tasks: any[] = [];
+
+     tasks = await getTasks();
+
     return <div>
-        this is the dashboard overview page //summary
+        {
+            tasks && tasks.map((task) => {
+                return <p>{task.title}</p>
+            })
+        }
     </div>
 }

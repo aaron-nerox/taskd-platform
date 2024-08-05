@@ -24,6 +24,7 @@ export default function Home() {
                     text={"Refresh"}
                     icon={'/assets/icons/rotate_right.svg'}
                     onButtonClick={router.refresh}
+                    className="bg-off-white"
                 />
             </div>
 
