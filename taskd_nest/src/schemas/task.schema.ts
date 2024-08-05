@@ -4,6 +4,9 @@ import {HydratedDocument} from "mongoose";
 
 export type TaskDocument = HydratedDocument<Task>;
 
+/**
+ * Mongoose model for Task
+ */
 @Schema()
 export class Task {
 
@@ -40,4 +43,7 @@ export class Task {
     status: TaskStatus;
 }
 
+/**
+ * Mongoose schema to be used inside modules
+ */
 export const TaskSchema = SchemaFactory.createForClass(Task)

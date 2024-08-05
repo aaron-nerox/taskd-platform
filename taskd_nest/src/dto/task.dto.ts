@@ -1,6 +1,11 @@
 import {TaskStatus} from "../enums/TaskStatus";
 import {IsDateString, IsIn, IsNotEmpty, IsOptional} from "class-validator";
 
+/**
+ * Task data transfer object
+ * This is a model used in some crud requests for Tasks
+ * It uses class-validator to do input validation before the endpoint operation happens
+ */
 export class TaskDto {
 
     @IsOptional()

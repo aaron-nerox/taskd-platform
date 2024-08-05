@@ -3,6 +3,9 @@ import {HydratedDocument} from "mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 
+/**
+ * Mongoose model for user
+ */
 @Schema()
 export class User {
 
@@ -33,4 +36,7 @@ export class User {
     password: string;
 }
 
+/**
+ * Mongoose schema for user to use in modules
+ */
 export const UserSchema = SchemaFactory.createForClass(User);

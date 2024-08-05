@@ -7,25 +7,51 @@ import {TaskSummaryDto} from "../dto/taskSummary.dto";
 import {TaskStatus} from "../enums/TaskStatus";
 import {v4 as uuid4} from "uuid";
 
-
+/**
+ * This is a service that handles
+ * creating, updating and deleting tasks
+ * accessing a single or multiple tasks
+ */
 @Injectable()
 export class TasksService {
+    //we inject the Task schema into our module for use to interact with db
     constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
+    /**
+     * This is a method for creating a new task,
+     * it uses uuid4 to inject a unique id into the task dto before creating a db record
+     * @params task : TaskDto
+     * @return Promise<Task>
+     */
     async createTask(task: TaskDto) : Promise<Task> {
         task.setId(uuid4())
         const createdTask = new this.taskModel(task)
         return createdTask.save()
     }
 
+    /**
+     * This is a method that returns all tasks in db
+     * @return Promise<Task[]>
+     */
     async getAllTasks(): Promise<Task[]> {
         return this.taskModel.find();
     }
 
+    /**
+     * This is a method that returns a single task object based on id
+     * @params id : string
+     * @return Promise<Task>
+     */
     async getTaskById(id: string) : Promise<Task> {
         return this.taskModel.findOne({taskId: id})
     }
 
+    /**
+     * This is a method that updates a task db record based on a new one
+     * @params id: string
+     * @params newTask: TaskDto
+     * @return Promise<Task>
+     */
     async updateTask(id: string, newTask: TaskDto): Promise<Task> {
         return this.taskModel
             .findOneAndUpdate(
@@ -39,10 +65,22 @@ export class TasksService {
             )
     }
 
+    /**
+     * This is a method that deletes a task using its id
+     * @params id: string
+     * @return Promise<Task>
+     */
     async deleteTask(id: string) : Promise<Task> {
         return this.taskModel.findOneAndDelete({taskId: id})
     }
 
+    /**
+     * This is a method that generates a summary for a user
+     * it basically gets a list of tasks and returns number of
+     * completed, in progress and pending tasks as well as a productivity ratio.
+     * Productivity ratio can be calculated like follows ((completed + in progress)/pending*2)*100
+     * max ratio will be 200 with no pending tasks and min will be 0 with no completed or in progress tasks
+     */
     async getTasksSummary() : Promise<TaskSummaryDto> {
         const tasks = await this.taskModel.find()
         const completedTasks = tasks.filter(task => task.status === TaskStatus.Completed).length
@@ -50,7 +88,9 @@ export class TasksService {
         const inProgressTasks = tasks.filter(task => task.status == TaskStatus.InProgress).length
         let productivityRatio : number;
 
+        //if there is no pending tasks return 200 to avoid returning undefined
         if(pendingTasks > 0) {
+            //use to Fixed method to limit floating points to just two
             productivityRatio = parseFloat((((completedTasks + inProgressTasks)/(pendingTasks*2))*100).toFixed(2));
         } else {
             productivityRatio = 200

@@ -5,6 +5,13 @@ import {MongooseModule} from "@nestjs/mongoose";
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
+/**
+ * App Wide module for registering submodules
+ * @module TasksModule
+ * @module MongooseModule
+ * @module AuthModule
+ * @module UserModule
+ */
 @Module({
   imports: [
     TasksModule,

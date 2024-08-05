@@ -1,5 +1,7 @@
-
-
+/**
+ * Task summary data transfer object
+ * used to return a summary via an endpoint
+ */
 export class TaskSummaryDto {
     constructor(
         totalUserTasks: number,

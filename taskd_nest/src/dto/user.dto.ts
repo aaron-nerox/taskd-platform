@@ -1,6 +1,10 @@
 import {IsEmail, IsNotEmpty, IsOptional} from "class-validator";
 
-
+/**
+ * User data transfer object
+ * This is a model used in user registration
+ * It uses class-validator to do input validation before the endpoint operation happens
+ */
 export class UserDto {
 
     @IsOptional()
@@ -28,6 +32,11 @@ export class UserDto {
     }
 }
 
+/**
+ * User login data transfer object
+ * This is a model used in user login
+ * It uses class-validator to do input validation before the endpoint operation happens
+ */
 export class UserLoginDto {
     @IsNotEmpty()
     @IsEmail()
