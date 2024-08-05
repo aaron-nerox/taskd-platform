@@ -6,16 +6,18 @@ import {useState} from "react";
 import TextIconButton from "@/components/Button";
 import login from "@/utils/api/login.api";
 import { useToast } from "@/components/ui/use-toast";
+import {useRouter} from "next/navigation";
 
 export default function ConnectPage() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const { toast } = useToast()
+    const router = useRouter();
 
     const handleLogin = () => {
         login(email, password)
             .then((result) => {
-                console.log(result);
+                router.push('/dashboard');
             })
             .catch((error) => {
                 toast({

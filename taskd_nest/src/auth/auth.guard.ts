@@ -10,8 +10,7 @@ export class AuthGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        const [type, value] = request.headers.authorization?.split(' ') ?? [];
-        const token = type === 'Bearer' ? value : undefined;
+        const token = this.extractJWT(request)
         if (!token) {
             throw new UnauthorizedException();
         }
@@ -28,5 +27,16 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException();
         }
         return true;
+    }
+
+    extractJWT(req: Request): string | null {
+        if (
+            req.cookies &&
+            'user_token' in req.cookies &&
+            req.cookies.user_token.length > 0
+        ) {
+            return req.cookies.user_token;
+        }
+        return null;
     }
 }

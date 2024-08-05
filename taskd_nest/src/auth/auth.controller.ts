@@ -9,7 +9,7 @@ export class AuthController {
 
 
     @Post('login')
-    async login(@Body() user: UserLoginDto, @Res() response: Response) {
+    async login(@Body() user: UserLoginDto, @Res({passthrough: true}) response: Response) {
         let result : any;
 
         try {
@@ -30,7 +30,11 @@ export class AuthController {
             })
         }
 
-        return response.status(200).send(result)
+        response
+            .status(200)
+            .cookie('user_token', result.userToken, {httpOnly: true})
+
+        return result;
 
     }
 
@@ -56,7 +60,11 @@ export class AuthController {
             })
         }
 
-        return response.status(200).send(result)
+        response
+            .cookie('user_token', result.userToken, {httpOnly: true})
+            .status(200)
+
+        return result;
 
     }
 }
