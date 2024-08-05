@@ -56,7 +56,7 @@ export class AuthService {
         try {
             createdUser = await this.userService.createUser(user)
         } catch (error) {
-            throw new HttpException("Error inserting user into db", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if(!createdUser) {

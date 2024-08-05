@@ -37,9 +37,7 @@ export class AuthController {
                 sameSite: "none",
                 secure: true,
             })
-
-        return result;
-
+            .send(result);
     }
 
     @Post('register')
@@ -65,11 +63,13 @@ export class AuthController {
         }
 
         response
-            .cookie('user_token', result.userToken, {httpOnly: true})
+            .cookie('user_token', result.userToken, {
+                httpOnly: true,
+                sameSite: "none",
+                secure: true,
+            })
             .status(200)
-
-        return result;
-
+            .send(result);
     }
 
     @Post('logout')
