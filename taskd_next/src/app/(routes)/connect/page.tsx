@@ -4,7 +4,7 @@ import Image from "next/image";
 import IconInput from "@/components/base/IconInput";
 import {useState} from "react";
 import TextIconButton from "@/components/base/Button";
-import login from "@/api/login.api";
+import {login} from "@/api/login.api";
 import { useToast } from "@/components/ui/use-toast";
 import {useRouter} from "next/navigation";
 

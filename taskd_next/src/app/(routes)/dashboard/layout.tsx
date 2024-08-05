@@ -3,6 +3,8 @@
 import React from "react";
 import TextIconButton from "@/components/base/Button";
 import {usePathname, useRouter} from "next/navigation";
+import { logout } from "@/api/logout.api";
+import {toast} from "@/components/ui/use-toast";
 
 export default function SummaryLayout(
     {children} : Readonly<{children: React.ReactNode}>
@@ -24,6 +26,21 @@ export default function SummaryLayout(
         }
     ]
 
+    const logUserOut = () => {
+        logout(router).then(() => {
+            toast({
+                variant: "default",
+                title: "Logged out, see ya later 🥹",
+            })
+        }).catch(error => {
+            toast({
+                variant: "destructive",
+                title: "Failed to logout",
+                description: "It might be on us, But, make sure your internet connection is stable."
+            })
+        })
+    }
+
 
     return <div className="w-full h-screen p-3 inline-flex flex-row items-center gap-x-3">
         <div className="w-[360px] h-full bg-dark/30 rounded-lg inline-flex flex-col items-center justify-between p-4">
@@ -43,7 +60,7 @@ export default function SummaryLayout(
             <TextIconButton
                 text={'Logout'}
                 icon={''}
-                onButtonClick={() => {}}
+                onButtonClick={logUserOut}
                 className="w-full rounded-lg shadow-lg  bg-off-white"
             />
         </div>

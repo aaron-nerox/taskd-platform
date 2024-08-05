@@ -2,7 +2,7 @@
 import axios from 'axios';
 import {cookies} from "next/headers";
 
-export default async function login(email: string, password: string): Promise<{username: string, email: string, userId: string, userToken: string} | undefined> {
+export async function login(email: string, password: string): Promise<{username: string, email: string, userId: string, userToken: string} | undefined> {
     try {
         const result = await axios.post(
             'http://localhost:8000/auth/login',
@@ -29,5 +29,5 @@ export default async function login(email: string, password: string): Promise<{u
     } catch(error) {
         return Promise.reject(error);
     }
-
 }
+
