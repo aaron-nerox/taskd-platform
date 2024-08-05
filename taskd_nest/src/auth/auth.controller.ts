@@ -32,7 +32,11 @@ export class AuthController {
 
         response
             .status(200)
-            .cookie('user_token', result.userToken, {httpOnly: true})
+            .cookie('user_token', result.userToken, {
+                httpOnly: true,
+                sameSite: "none",
+                secure: true,
+            })
 
         return result;
 
