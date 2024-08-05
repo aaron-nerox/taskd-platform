@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function LinkButton(
@@ -9,7 +8,7 @@ export default function LinkButton(
     }
 ) {
     return <div
-        className={props.className + " rounded-full inline-flex flex-row items-center justify-center px-4 py-2"}
+        className={props.className + " rounded-full grid items-center justify-center px-4 py-2"}
     >
         <Link
             href={props.link}
