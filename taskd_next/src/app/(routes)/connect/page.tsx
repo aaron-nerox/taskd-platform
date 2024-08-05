@@ -1,10 +1,10 @@
 'use client'
 
 import Image from "next/image";
-import IconInput from "@/components/IconInput";
+import IconInput from "@/components/base/IconInput";
 import {useState} from "react";
-import TextIconButton from "@/components/Button";
-import login from "@/utils/api/login.api";
+import TextIconButton from "@/components/base/Button";
+import login from "@/api/login.api";
 import { useToast } from "@/components/ui/use-toast";
 import {useRouter} from "next/navigation";
 

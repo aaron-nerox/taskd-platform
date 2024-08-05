@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {useRouter} from "next/navigation";
-import TextIconButton from "@/components/Button";
+import TextIconButton from "@/components/base/Button";
 
 
 export default function Home() {
