@@ -86,7 +86,7 @@ export default function NewTaskPage() {
         </div>
 
         <p className="text-3xl font-bold text-off-white my-10">
-            Now all you have to do is 👇
+            👇 Now all you have to do is
         </p>
         
         <TextIconButton

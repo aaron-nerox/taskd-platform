@@ -2,7 +2,6 @@ import axios from 'axios';
 import {cookies} from "next/headers";
 import {SummaryDto} from "@/dto/summary.dto";
 import {TaskDto} from "@/dto/task.dto";
-import {TaskStatus} from "@/enums/TaskStatus";
 
 
 export async function getTasks(): Promise<TaskDto[] | undefined> {
@@ -14,10 +13,11 @@ export async function getTasks(): Promise<TaskDto[] | undefined> {
             {
                 headers : {
                     'Content-Type': 'application/json',
-                    'Cookie' : `user_token=${cookie}`
+                    'Cookie' : `user_token=${cookie}`,
+                    'Cache-Control': 'no-store',
                 },
                 method: 'GET',
-                withCredentials: true
+                withCredentials: true,
             }
         )
 
@@ -41,7 +41,8 @@ export async function getTaskSummary() : Promise<SummaryDto | undefined> {
             {
                 headers : {
                     'Content-Type': 'application/json',
-                    'Cookie' : `user_token=${cookie}`
+                    'Cookie' : `user_token=${cookie}`,
+                    'Cache-Control': 'no-cache',
                 },
                 method: 'GET',
                 withCredentials: true

@@ -59,7 +59,7 @@ export default function Task(props: {
                 </div>
             </DrawerTrigger>
             <DrawerContent className='bg-off-white outline-none'>
-                <div className="h-fit w-1/3 mx-auto grid items-start gap-y-4 mb-10">
+                <div className="h-fit w-2/3 mx-auto grid items-start gap-y-4 mb-10">
                     <DrawerTitle className="text-2xl font-bold mt-5">
                         {props.task.title}
                     </DrawerTitle>

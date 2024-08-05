@@ -18,6 +18,7 @@ body {
 
 ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 /* Track */
@@ -36,4 +37,14 @@ body {
     background: rgba(255, 255, 255, 0.80);
 }
 
-@layer utilities {}
+.top-scroll {
+    transform:rotateX(180deg);
+    -moz-transform:rotateX(180deg); /* Mozilla */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+    -ms-transform:rotateX(180deg); /* IE 9+ */
+    -o-transform:rotateX(180deg);
+}
+
+@layer utilities {
+
+}

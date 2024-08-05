@@ -5,11 +5,28 @@ import {TrendingDown, TrendingUp} from "lucide-react";
 import {TaskStatus} from "@/enums/TaskStatus";
 import Task from "@/components/base/Task";
 import {isDateDue} from "@/utils/dateUtils";
+import {toast} from "@/components/ui/use-toast";
 
 
 export default async function SummaryPage() {
-     const taskSummary = await getTaskSummary();
-     const tasks = await getTasks();
+     const taskSummary = await getTaskSummary()
+         .catch((error) => {
+             toast({
+                 variant: "destructive",
+                 title: "Failed to retrieve tasks summary",
+                 description: "It might be on us, But, make sure your internet connection is stable."
+             })
+             return undefined
+         });
+
+     const tasks = await getTasks().catch((error) => {
+         toast({
+             variant: "destructive",
+             title: "Failed to retrieve tasks summary",
+             description: "It might be on us, But, make sure your internet connection is stable."
+         })
+         return undefined
+     });
 
     return <div className="w-full p-10 max-h-full overflow-scroll overflow-x-hidden">
         <p className="text-3xl font-bold text-off-white mb-10">
@@ -20,8 +37,7 @@ export default async function SummaryPage() {
                 <SummaryContent
                     summary={taskSummary}
                 />
-                <p className="mx-auto w-[90%] text-center font-bold text-lg">Amount of Completed Tasks vs Pending vs In
-                    progress</p>
+                <p className="mx-auto w-[90%] text-center font-bold text-lg">Tasks divided by status</p>
             </div>
             <div
                 className="w-full h-full bg-off-white p-5 rounded-lg shadow-lg inline-flex flex-col items-center justify-center">
