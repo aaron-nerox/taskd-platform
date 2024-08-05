@@ -44,7 +44,7 @@ export default function ConnectLayout(
                 text={'Logout'}
                 icon={''}
                 onButtonClick={() => {}}
-                className="w-full rounded-lg shadow-lg  "
+                className="w-full rounded-lg shadow-lg  bg-off-white"
             />
         </div>
         <div className="w-full h-full bg-dark/30 rounded-lg">

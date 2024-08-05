@@ -51,7 +51,7 @@ export class TasksService {
         let productivityRatio : number;
 
         if(pendingTasks > 0) {
-            productivityRatio = ((completedTasks + inProgressTasks)/(pendingTasks*2))*100
+            productivityRatio = parseFloat((((completedTasks + inProgressTasks)/(pendingTasks*2))*100).toFixed(2));
         }
 
         return new TaskSummaryDto(

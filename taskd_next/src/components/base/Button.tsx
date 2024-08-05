@@ -7,7 +7,7 @@ export default function TextIconButton(
         text: string,
         icon: string,
         className?: string,
-        onButtonClick: () => void
+        onButtonClick?: () => void
     }
 ) {
     return <div

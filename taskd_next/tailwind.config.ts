@@ -21,7 +21,10 @@ const config = {
       colors: {
         'transparent': 'transparent',
         'off-white': '#FBFBFA',
-        'dark' : '#1f1f1f'
+        'dark' : '#1f1f1f',
+        'progress': '#ffbb06',
+        'completed': '#01df63',
+        'pending': '#ff304a'
       },
       keyframes: {
         "accordion-down": {
