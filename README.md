@@ -29,7 +29,7 @@ docker compose up --build
 ```
 next    : http://localhost:3000
 nest    : http://localhost:8000
-mongodb : mongodb://loaclhost:1027
+mongodb : mongodb://localhost:1027
 ```
 - Routing for nest is straight forward here are the routes :
 ```
