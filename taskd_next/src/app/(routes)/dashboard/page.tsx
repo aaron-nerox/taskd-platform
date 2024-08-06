@@ -1,6 +1,5 @@
 import {getTasks, getTaskSummary} from "@/api/tasks.api";
 import SummaryContent from "./content"
-import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {TrendingDown, TrendingUp} from "lucide-react";
 import {TaskStatus} from "@/enums/TaskStatus";
 import Task from "@/components/base/Task";

@@ -1,7 +1,7 @@
 'use client'
 
 import {SummaryDto} from "@/dto/summary.dto";
-import {Label, Pie, PieChart} from "recharts";
+import {Pie, PieChart} from "recharts";
 import {ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/components/ui/chart";
 import React from "react";
 

@@ -43,7 +43,7 @@ export default function RegisterPage() {
             </p>
         </div>
         <div className="bg-dark/40 w-1/2 h-full rounded-xl shadow-xl shadow-dark/20 inline-flex flex-col items-center justify-center gap-y-5">
-            <p className="w-1/2 text-off-white text-3xl text-center leading-relaxed mb-5">
+            <p className="w-3/4 text-off-white text-3xl text-center leading-relaxed mb-5">
                 Connect into your dashboard and increase your productivity to unimagined levels
             </p>
             <IconInput
