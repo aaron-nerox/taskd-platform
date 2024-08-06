@@ -1,5 +1,4 @@
 import {getTasks} from "@/api/tasks.api";
-import {toast} from "@/components/ui/use-toast";
 import {TaskDto} from "@/dto/task.dto";
 import TasksContent from "@/app/(routes)/dashboard/tasks/content";
 
@@ -9,13 +8,7 @@ export default async function TasksBoardPage() {
     let headerText: string = "Review your Kanban board"
 
     const result = await getTasks()
-        .catch((error) => {
-            toast({
-                variant: "destructive",
-                title: "Failed to retrieve tasks",
-                description: "It might be on us, But, make sure your internet connection is stable."
-            })
-        })
+        .catch((error) => {})
 
     if(result) {
         tasks = result

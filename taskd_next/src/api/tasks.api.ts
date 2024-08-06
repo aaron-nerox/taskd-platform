@@ -9,7 +9,7 @@ export async function getTasks(): Promise<TaskDto[] | undefined> {
 
     try {
         const result = await axios(
-            'http://localhost:8000/tasks',
+            'http://taskd_nest_container:8000/tasks',
             {
                 headers : {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export async function getTaskSummary() : Promise<SummaryDto | undefined> {
 
     try {
         const result = await axios(
-            'http://localhost:8000/tasks/summary',
+            'http://taskd_nest_container:8000/tasks/summary',
             {
                 headers : {
                     'Content-Type': 'application/json',

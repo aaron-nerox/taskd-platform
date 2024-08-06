@@ -5,7 +5,7 @@ import {cookies} from "next/headers";
 export async function login(email: string, password: string): Promise<{username: string, email: string, userId: string, userToken: string} | undefined> {
     try {
         const result = await axios.post(
-            'http://localhost:8000/auth/login',
+            'http://taskd_nest_container:8000/auth/login',
             {
                 email: email,
                 password: password
@@ -34,7 +34,7 @@ export async function login(email: string, password: string): Promise<{username:
 export async function register(username: string, email: string, password: string): Promise<{username: string, email: string, userId: string, userToken: string} | undefined> {
     try {
         const result = await axios.post(
-            'http://localhost:8000/auth/register',
+            'http://taskd_nest_container:8000/auth/register',
             {
                 username: username,
                 email: email,

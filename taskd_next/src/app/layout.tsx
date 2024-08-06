@@ -16,7 +16,7 @@ export default function RootLayout({children}: Readonly<{
     return (
         <html lang="en">
             <body className={poppins.className}>
-                {children}
+                <main>{children}</main>
                 <Toaster/>
             </body>
         </html>

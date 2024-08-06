@@ -4,26 +4,16 @@ import {TrendingDown, TrendingUp} from "lucide-react";
 import {TaskStatus} from "@/enums/TaskStatus";
 import Task from "@/components/base/Task";
 import {isDateDue} from "@/utils/dateUtils";
-import {toast} from "@/components/ui/use-toast";
 
 
 export default async function SummaryPage() {
+
      const taskSummary = await getTaskSummary()
          .catch((error) => {
-             toast({
-                 variant: "destructive",
-                 title: "Failed to retrieve tasks summary",
-                 description: "It might be on us, But, make sure your internet connection is stable."
-             })
              return undefined
          });
 
      const tasks = await getTasks().catch((error) => {
-         toast({
-             variant: "destructive",
-             title: "Failed to retrieve tasks summary",
-             description: "It might be on us, But, make sure your internet connection is stable."
-         })
          return undefined
      });
 
