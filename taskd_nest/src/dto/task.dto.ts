@@ -11,6 +11,9 @@ export class TaskDto {
     @IsOptional()
     taskId: string;
 
+    @IsOptional()
+    taskUserId: string;
+
     @IsNotEmpty()
     title: string;
 
@@ -27,5 +30,9 @@ export class TaskDto {
 
     setId(taskId: string) : void {
         this.taskId = taskId;
+    }
+
+    setUserId(userId: string) : void {
+        this.taskUserId = userId;
     }
 }

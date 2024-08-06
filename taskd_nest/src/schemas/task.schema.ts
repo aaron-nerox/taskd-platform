@@ -21,6 +21,12 @@ export class Task {
         required: true,
         type: String
     })
+    taskUserId: string;
+
+    @Prop({
+        required: true,
+        type: String
+    })
     title: string;
 
     @Prop({

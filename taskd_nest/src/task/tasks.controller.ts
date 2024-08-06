@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UseGuards} from "@nestjs/common";
 import {TasksService} from "./tasks.service";
 import {TaskDto} from "../dto/task.dto";
 import {Response} from "express";
@@ -25,10 +25,12 @@ export class TasksController {
      */
     @Post()
     @UseGuards(AuthGuard)
-    async createTask(@Body() taskDto: TaskDto, @Res() response: Response) {
+    async createTask(@Body() taskDto: TaskDto, @Req() request: Request, @Res() response: Response) {
         let result : Task;
+        const userId = request['user'].sub
 
         try {
+            taskDto.setUserId(userId)
             result = await this.taskService.createTask(taskDto)
         } catch (error) {
             //handle db error or any other unexpected error
@@ -53,11 +55,11 @@ export class TasksController {
      */
     @Get()
     @UseGuards(AuthGuard)
-    async findAllTasks(@Res() response: Response) {
+    async findAllTasks(@Req() request: Request, @Res() response: Response) {
         let tasks: Task[];
-
+        const userId = request['user'].sub
         try {
-            tasks = await this.taskService.getAllTasks();
+            tasks = await this.taskService.getAllTasks(userId);
         } catch (error) {
             //handle crash by sending back internal server error
             return response.status(500).send({
@@ -91,11 +93,11 @@ export class TasksController {
      */
     @Get('summary')
     @UseGuards(AuthGuard)
-    async getTaskSummary(@Res() response: Response) {
+    async getTaskSummary(@Req() request: Request, @Res() response: Response) {
         let taskSummary: TaskSummaryDto;
-
+        const userId = request['user'].sub
         try {
-            taskSummary = await this.taskService.getTasksSummary()
+            taskSummary = await this.taskService.getTasksSummary(userId)
         } catch (error) {
             //handle crash by sending back internal server error
             return response
@@ -121,11 +123,11 @@ export class TasksController {
      */
     @Get(':id')
     @UseGuards(AuthGuard)
-    async findTaskById(@Param() params: any, @Res() response: Response) {
+    async findTaskById(@Param() params: any, @Req() request: Request, @Res() response: Response) {
         let task: Task;
-
+        const userId = request['user'].sub
         try {
-            task = await this.taskService.getTaskById(params.id)
+            task = await this.taskService.getTaskById(params.id, userId)
         } catch (error) {
             //handle crash by sending back internal server error
             return response
@@ -166,11 +168,13 @@ export class TasksController {
     async updateTask(
         @Param() params: any,
         @Body() taskDto: TaskDto,
+        @Req() request: Request,
         @Res() response: Response
     ) {
         let resultTask: Task;
-
+        const userId = request['user'].sub
         try {
+            taskDto.setUserId(userId)
             resultTask = await this.taskService.updateTask(params.id, taskDto)
         } catch (error) {
             //handle crash by sending back internal server error
@@ -208,11 +212,11 @@ export class TasksController {
      */
     @Delete(':id')
     @UseGuards(AuthGuard)
-    async deleteTask(@Param() params: any, @Res() response: Response) {
+    async deleteTask(@Param() params: any,@Req() request: Request, @Res() response: Response) {
         let resultTask: Task;
-
+        const userId = request['user'].sub
         try {
-            resultTask = await this.taskService.deleteTask(params.id);
+            resultTask = await this.taskService.deleteTask(params.id, userId);
         } catch(error) {
             //handle crash by sending back internal server error
             return response

@@ -33,8 +33,8 @@ export class TasksService {
      * This is a method that returns all tasks in db
      * @return Promise<Task[]>
      */
-    async getAllTasks(): Promise<Task[]> {
-        return this.taskModel.find();
+    async getAllTasks(userId: string): Promise<Task[]> {
+        return this.taskModel.find({taskUserId : userId});
     }
 
     /**
@@ -42,8 +42,8 @@ export class TasksService {
      * @params id : string
      * @return Promise<Task>
      */
-    async getTaskById(id: string) : Promise<Task> {
-        return this.taskModel.findOne({taskId: id})
+    async getTaskById(id: string, userId: string) : Promise<Task> {
+        return this.taskModel.findOne({taskId: id, taskUserId: userId})
     }
 
     /**
@@ -56,7 +56,8 @@ export class TasksService {
         return this.taskModel
             .findOneAndUpdate(
                 {
-                    taskId: id
+                    taskId: id,
+                    taskUserId: newTask.taskUserId
                 },
                 newTask,
                 {
@@ -70,8 +71,8 @@ export class TasksService {
      * @params id: string
      * @return Promise<Task>
      */
-    async deleteTask(id: string) : Promise<Task> {
-        return this.taskModel.findOneAndDelete({taskId: id})
+    async deleteTask(id: string, userId: string) : Promise<Task> {
+        return this.taskModel.findOneAndDelete({taskId: id, taskUserId: userId})
     }
 
     /**
@@ -81,8 +82,8 @@ export class TasksService {
      * Productivity ratio can be calculated like follows ((completed + in progress)/pending*2)*100
      * max ratio will be 200 with no pending tasks and min will be 0 with no completed or in progress tasks
      */
-    async getTasksSummary() : Promise<TaskSummaryDto> {
-        const tasks = await this.taskModel.find()
+    async getTasksSummary(userId: string) : Promise<TaskSummaryDto> {
+        const tasks = await this.taskModel.find({taskUserId: userId})
         const completedTasks = tasks.filter(task => task.status === TaskStatus.Completed).length
         const pendingTasks = tasks.filter(task => task.status == TaskStatus.Pending).length
         const inProgressTasks = tasks.filter(task => task.status == TaskStatus.InProgress).length
